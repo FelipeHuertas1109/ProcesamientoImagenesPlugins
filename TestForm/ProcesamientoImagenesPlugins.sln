@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiAppProcesamiento", "MiAppProcesamiento.csproj", "{FCE5A2B0-C9C3-484D-963A-46598411F5BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltrosAPI", "..\FiltrosAPI\FiltrosAPI.csproj", "{2BF16466-8E86-49C1-9E12-A60F568F831A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroEscalaGrises", "..\FiltroEscalaGrises\FiltroEscalaGrises.csproj", "{2753329A-2950-4808-9DB4-96DC11D7D81E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2BF16466-8E86-49C1-9E12-A60F568F831A} = {2BF16466-8E86-49C1-9E12-A60F568F831A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroRotarImagen", "..\FiltroRotarImagen\FiltroRotarImagen.csproj", "{57388BC4-8518-427F-8DC3-6E010D99559F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroSepia", "..\FiltroSepia\FiltroSepia.csproj", "{1B6AF39F-D84B-4A17-9404-8EB4A6539CB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroMetadata", "..\FiltroMetadata\FiltroMetadata.csproj", "{494E3122-D5FB-4E8E-96C2-9651462BABA4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCE5A2B0-C9C3-484D-963A-46598411F5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE5A2B0-C9C3-484D-963A-46598411F5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE5A2B0-C9C3-484D-963A-46598411F5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE5A2B0-C9C3-484D-963A-46598411F5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF16466-8E86-49C1-9E12-A60F568F831A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF16466-8E86-49C1-9E12-A60F568F831A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF16466-8E86-49C1-9E12-A60F568F831A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF16466-8E86-49C1-9E12-A60F568F831A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2753329A-2950-4808-9DB4-96DC11D7D81E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2753329A-2950-4808-9DB4-96DC11D7D81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2753329A-2950-4808-9DB4-96DC11D7D81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2753329A-2950-4808-9DB4-96DC11D7D81E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57388BC4-8518-427F-8DC3-6E010D99559F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57388BC4-8518-427F-8DC3-6E010D99559F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57388BC4-8518-427F-8DC3-6E010D99559F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57388BC4-8518-427F-8DC3-6E010D99559F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6AF39F-D84B-4A17-9404-8EB4A6539CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6AF39F-D84B-4A17-9404-8EB4A6539CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6AF39F-D84B-4A17-9404-8EB4A6539CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6AF39F-D84B-4A17-9404-8EB4A6539CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A3CA496-786D-4490-A2BB-A433DE391482}
+	EndGlobalSection
+EndGlobal
