@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using FiltrosAPI;
@@ -11,39 +7,31 @@ namespace TestForm
 {
     public class GestorPlugins
     {
-        public List<IFiltro> FiltrosDisponibles { get; private set; } = new List<IFiltro>();
-
-        public void CargarFiltros(string rutaCarpeta)
+        // Método que carga un filtro desde un archivo DLL y lo devuelve
+        public IFiltro CargarFiltroDeArchivo(string archivo, out string error)
         {
-            if (!Directory.Exists(rutaCarpeta))
+            error = "";
+            try
             {
-                Directory.CreateDirectory(rutaCarpeta);
-            }
-
-            // Buscar todos los .dll en la carpeta
-            foreach (string archivo in Directory.GetFiles(rutaCarpeta, "*.dll"))
-            {
-                try
+                Assembly ensamblado = Assembly.LoadFrom(archivo);
+                foreach (Type tipo in ensamblado.GetTypes())
                 {
-                    Assembly ensamblado = Assembly.LoadFrom(archivo);
-                    foreach (Type tipo in ensamblado.GetTypes())
+                    // Verifica si el tipo implementa IFiltro y no es interfaz ni abstracto
+                    if (typeof(IFiltro).IsAssignableFrom(tipo) &&
+                        !tipo.IsInterface &&
+                        !tipo.IsAbstract)
                     {
-                        // Verifica si el tipo implementa IFiltro y no es interfaz ni abstracto
-                        if (typeof(IFiltro).IsAssignableFrom(tipo)
-                            && !tipo.IsInterface
-                            && !tipo.IsAbstract)
-                        {
-                            IFiltro filtro = (IFiltro)Activator.CreateInstance(tipo);
-                            FiltrosDisponibles.Add(filtro);
-                        }
+                        return (IFiltro)Activator.CreateInstance(tipo);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error al cargar {archivo}: {ex.Message}");
-                }
+                error = "No se encontró un filtro que implemente IFiltro en el DLL.";
+                return null;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                return null;
             }
         }
     }
 }
-

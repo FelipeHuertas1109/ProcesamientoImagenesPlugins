@@ -27,6 +27,8 @@ namespace TestForm
         {
             // Inicializar el gestor al iniciar el Form
             gestor = new GestorPlugins();
+            // Opcional: Asegurarse de que el contenedor de filtros (groupBoxFiltros) esté vacío
+            groupBox1.Controls.Clear();
         }
 
         private void btnCargarImagen_Click(object sender, EventArgs e)
@@ -49,77 +51,76 @@ namespace TestForm
 
         private void btnCargarFiltros_Click(object sender, EventArgs e)
         {
-            // Carpeta donde se ubican los DLL de tus plugins
-            string rutaPlugins = Path.Combine(Application.StartupPath, "Plugins");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "DLL Files|*.dll";
+            openFileDialog.Title = "Seleccionar el DLL del filtro";
 
-            // Cargar todos los filtros disponibles
-            gestor.CargarFiltros(rutaPlugins);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string archivo = openFileDialog.FileName;
+                string error;
+                IFiltro filtro = gestor.CargarFiltroDeArchivo(archivo, out error);
 
-            // Mostrar un mensaje con cuántos se cargaron
-            label2.Text = $"Se cargaron {gestor.FiltrosDisponibles.Count} filtros.";
+                if (filtro != null)
+                {
+                    // Crear un nuevo RadioButton para el filtro cargado
+                    RadioButton rb = new RadioButton();
+                    rb.Text = filtro.Nombre;
+                    rb.Tag = filtro; // Guardar la instancia del filtro en la propiedad Tag
+                    rb.AutoSize = true;
+                    rb.Enabled = true;
+                    rb.Checked = false; // Opcional: se marca de inmediato al cargar
+
+                    // Posicionar el RadioButton dentro de groupBox1
+                    int count = groupBox1.Controls.Count;
+                    rb.Location = new Point(10, 20 + count * 25);
+
+                    // Agregar el RadioButton al groupBox1
+                    groupBox1.Controls.Add(rb);
+
+                    label2.Text = $"Filtro '{filtro.Nombre}' cargado exitosamente.";
+                }
+                else
+                {
+                    MessageBox.Show("Error al cargar el filtro: " + error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnEjecutarFiltro_Click(object sender, EventArgs e)
         {
-            // Verificar que haya una imagen
             if (imagenActual == null)
             {
                 MessageBox.Show("No hay imagen cargada.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Determinar qué RadioButton está marcado para saber qué filtro aplicar
-            string nombreFiltroSeleccionado = null;
-
-            if (rbEscalaGrises.Checked)
+            // Buscar en groupBoxFiltros el RadioButton seleccionado
+            IFiltro filtroSeleccionado = null;
+            foreach (Control ctrl in groupBox1.Controls)
             {
-                nombreFiltroSeleccionado = "Escala de grises";
-                // Asegúrate de que coincida con el .Nombre que retorna tu plugin
+                if (ctrl is RadioButton rb && rb.Checked)
+                {
+                    filtroSeleccionado = rb.Tag as IFiltro;
+                    break;
+                }
             }
-            else if (rbObtenerMetadata.Checked)
-            {
-                nombreFiltroSeleccionado = "Obtener metadata";
-            }
-            else if (rbRotarImagen.Checked)
-            {
-                nombreFiltroSeleccionado = "Rotar Imagen";
-            }
-            else if (rbFiltroSepia.Checked)
-            {
-                nombreFiltroSeleccionado = "Filtro sepia";
-            }
-            else if (rbPersistirImagen.Checked)
-            {
-                nombreFiltroSeleccionado = "Persistir imagen en BD";
-            }
-
-            if (string.IsNullOrEmpty(nombreFiltroSeleccionado))
-            {
-                MessageBox.Show("Selecciona un filtro en los RadioButtons.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Buscar el plugin correspondiente en la lista
-            IFiltro filtroSeleccionado = gestor.FiltrosDisponibles
-                .Find(f => f.Nombre == nombreFiltroSeleccionado);
 
             if (filtroSeleccionado == null)
             {
-                MessageBox.Show("El filtro seleccionado no está disponible o no se ha cargado el plugin.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No hay filtro seleccionado. Asegúrate de marcar el RadioButton correspondiente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Aplicar el filtro
+            // Aplicar el filtro sobre una copia de la imagen original
             Bitmap imagenConFiltro = filtroSeleccionado.AplicarFiltro((Bitmap)imagenActual.Clone());
-
-            // Mostrar el resultado en el PictureBox "Con Filtro"
             pbImagenConFiltro.Image = imagenConFiltro;
             pbImagenConFiltro.SizeMode = PictureBoxSizeMode.Zoom;
 
             // Si el filtro es "Obtener metadata", mostrar la información en label2
             if (filtroSeleccionado.Nombre == "Obtener metadata")
             {
-                // Usamos dynamic para acceder a la propiedad Informacion sin necesidad de referenciar el plugin directamente.
+                // Acceder dinámicamente a la propiedad Informacion
                 dynamic metadataPlugin = filtroSeleccionado;
                 label2.Text = metadataPlugin.Informacion;
             }
