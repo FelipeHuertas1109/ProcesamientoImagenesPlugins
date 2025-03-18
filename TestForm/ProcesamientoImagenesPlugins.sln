@@ -18,6 +18,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroSepia", "..\FiltroSep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroMetadata", "..\FiltroMetadata\FiltroMetadata.csproj", "{494E3122-D5FB-4E8E-96C2-9651462BABA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiltroPersistirMySQL", "..\FiltroPersistirMySQL\FiltroPersistirMySQL.csproj", "{04C0A34F-CBB1-4B2A-9C96-60A4199D25F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2BF16466-8E86-49C1-9E12-A60F568F831A} = {2BF16466-8E86-49C1-9E12-A60F568F831A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +53,10 @@ Global
 		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494E3122-D5FB-4E8E-96C2-9651462BABA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04C0A34F-CBB1-4B2A-9C96-60A4199D25F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04C0A34F-CBB1-4B2A-9C96-60A4199D25F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04C0A34F-CBB1-4B2A-9C96-60A4199D25F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04C0A34F-CBB1-4B2A-9C96-60A4199D25F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
