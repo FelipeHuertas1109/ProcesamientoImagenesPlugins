@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using FiltrosAPI;
+using MiAppProcesamiento;
 
 namespace TestForm
 {
@@ -59,13 +60,15 @@ namespace TestForm
             {
                 string archivo = openFileDialog.FileName;
                 string error;
+
                 IFiltro filtro = gestor.CargarFiltroDeArchivo(archivo, out error);
+                FiltroDTO dto = FiltroFactory.CrearFiltroDTO(filtro);
 
                 if (filtro != null)
                 {
                     // Crear un nuevo RadioButton para el filtro cargado
                     RadioButton rb = new RadioButton();
-                    rb.Text = filtro.Nombre;
+                    rb.Text = dto.Nombre;
                     rb.Tag = filtro; // Guardar la instancia del filtro en la propiedad Tag
                     rb.AutoSize = true;
                     rb.Enabled = true;
@@ -78,7 +81,7 @@ namespace TestForm
                     // Agregar el RadioButton al groupBox1
                     groupBox1.Controls.Add(rb);
 
-                    label2.Text = $"Filtro '{filtro.Nombre}' cargado exitosamente.";
+                    label2.Text = $"Filtro '{dto.Nombre}' cargado exitosamente.";
                 }
                 else
                 {
@@ -116,6 +119,8 @@ namespace TestForm
             Bitmap imagenConFiltro = filtroSeleccionado.AplicarFiltro((Bitmap)imagenActual.Clone());
             pbImagenConFiltro.Image = imagenConFiltro;
             pbImagenConFiltro.SizeMode = PictureBoxSizeMode.Zoom;
+
+
 
             // Si el filtro es "Obtener metadata", mostrar la información en label2
             if (filtroSeleccionado.Nombre == "Obtener metadata")

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FiltrosAPI;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace FiltroPersistirMySQL
 {
@@ -27,15 +30,6 @@ namespace FiltroPersistirMySQL
             string error;
             bool exito = conector.GuardarImagen("ImagenPersistida", imagenBytes, out error);
 
-            // Opcional: Notificar el resultado al usuario
-            if (!exito)
-            {
-                MessageBox.Show("Error al guardar la imagen en la base de datos: " + error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                MessageBox.Show("Imagen guardada exitosamente en la base de datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
 
             // Retornar la imagen original (el filtro se limita a guardar en la BD)
             return imagenOriginal;

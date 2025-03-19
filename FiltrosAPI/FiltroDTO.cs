@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FiltrosAPI
 {
-    class FiltroDTO
+    public class FiltroDTO
     {
         public string Nombre { get; set; }
     }
